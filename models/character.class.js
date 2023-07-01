@@ -34,6 +34,7 @@ class Character extends MovebalObject{
    ];
    height = 250;
    width = 100;
+   world;
 
     constructor(){
        super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -44,11 +45,14 @@ class Character extends MovebalObject{
 
    animate() {
       setInterval(() => {
+
+         if(this.world.keyboard.RIGHT){
       let i = this.currentImage % this.IMAGES_WALK.length;
       let path = this.IMAGES_WALK[i];
       this.img = this.imageCache[path];
       this.currentImage ++;
-    }, 190);
+      }
+      }, 190);
    }
 
     jump(){
