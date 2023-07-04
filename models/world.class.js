@@ -1,8 +1,6 @@
 class World {
   character = new Character();
-  enemies = level1.enemies;
-  clouds = level1.clouds;
-  backgroundObjects = level1.backgroundObjects;
+  level = level1;
   canvas;
   ctx;
   keyboard;
@@ -23,12 +21,10 @@ class World {
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
-
-    this.addObjectsToMap(this.backgroundObjects);
-    this.addObjectsToMap(this.clouds);
-    this.addObjectsToMap(this.enemies);
+    this.addObjectsToMap(this.level.backgroundObjects);
+    this.addObjectsToMap(this.level.clouds);
+    this.addObjectsToMap(this.level.enemies);
     this.addToMap(this.character);
-
     this.ctx.translate(-this.camera_x, 0);
     //draw() wird immer wieder aufgerufen
     let self = this;
@@ -45,16 +41,22 @@ class World {
 
   addToMap(mo) {
     if (mo.otherDirection) {
-      this.ctx.save();
-      this.ctx.translate(mo.width, 0);
-      this.ctx.scale(-1, 1);
-      mo.x = mo.x * -1;
+      mo.mirrorImage(this.ctx);
     }
-
-    this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+    mo.draw(this.ctx);
+    mo.drawFrame(this.ctx);
     if (mo.otherDirection) {
-      mo.x = mo.x * -1;
-      this.ctx.restore();
+      mo.restoreImage(this.ctx);
     }
   }
+  // Bessere Formel zur Kollisionsberechnung (Genauer)
+isColliding (obj) {
+  return  (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) && 
+          (this.Y + this.offsetY + this.height) >= obj.Y &&
+          (this.Y + this.offsetY) <= (obj.Y + obj.height) && 
+          obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+
 }
+}
+
+
