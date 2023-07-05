@@ -47,8 +47,23 @@ class Character extends MovebalObject {
     "img/2_character_pepe/3_jump/j-38.png",
     "img/2_character_pepe/3_jump/j-39.png",
   ];
+  IMAGES_HURT = [
+    "img/2_character_pepe/4_hurt/H-41.png",
+    "img/2_character_pepe/4_hurt/H-42.png",
+    "img/2_character_pepe/4_hurt/H-43.png",
+  ];
+  IMAGES_DEAD = [
+    "img/2_character_pepe/5_dead/D-51.png",
+    "img/2_character_pepe/5_dead/D-52.png",
+    "img/2_character_pepe/5_dead/D-53.png",
+    "img/2_character_pepe/5_dead/D-54.png",
+    "img/2_character_pepe/5_dead/D-55.png",
+    "img/2_character_pepe/5_dead/D-56.png",
+    "img/2_character_pepe/5_dead/D-57.png",
+  ];
   jumping_sound = new Audio("audio/jump.wav");
   walking_sound = new Audio("audio/sand-walk1.wav");
+  hurt_sound = new Audio("audio/hurt1.wav");
   height = 250;
   width = 125;
   speed = 1.5;
@@ -62,6 +77,8 @@ class Character extends MovebalObject {
     this.loadImages(this.IMAGES_JUMP);
     this.loadImages(this.IMAGES_IDLE);
     this.loadImages(this.IMAGES_LONG_IDLE);
+    this.loadImages(this.IMAGES_HURT);
+    this.loadImages(this.IMAGES_DEAD);
     this.applyGravity();
     this.animate();
   }
@@ -83,7 +100,11 @@ class Character extends MovebalObject {
     }, 1000 / 100);
 
     setInterval(() => {
-      if (this.isAboveGround()) {
+      if (this.isDead()) {
+        this.playAnimation(this.IMAGES_DEAD);
+      } else if (this.isHurt()) {
+        this.playAnimation(this.IMAGES_HURT);
+      } else if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMP);
       } else {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
@@ -92,5 +113,4 @@ class Character extends MovebalObject {
       }
     }, 100);
   }
-
 }
