@@ -64,6 +64,7 @@ class Character extends MovebalObject {
   jumping_sound = new Audio("audio/jump.wav");
   walking_sound = new Audio("audio/sand-walk1.wav");
   hurt_sound = new Audio("audio/hurt1.wav");
+  coin_sound = new Audio("audio/coin.wav");
   height = 250;
   width = 125;
   speed = 1.5;

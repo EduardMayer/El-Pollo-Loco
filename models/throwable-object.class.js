@@ -18,5 +18,3 @@ class ThrowableObject extends MovebalObject{
         
     }
 }
-
-

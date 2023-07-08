@@ -6,7 +6,9 @@ class MovebalObject extends DrawableObject {
   offset = { x: 0, y: 0, width: 0, height: 0 };
   health = 100;
   lastHit = 0;
-  
+  coin = 0;
+  bottle = 0;
+
   applyGravity() {
     setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
@@ -69,14 +71,15 @@ class MovebalObject extends DrawableObject {
   // Bessere Formel zur Kollisionsberechnung (Genauer)
   // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt.
   // Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-  isColliding(mo) {
+  isColliding(mo, offsetX = 0, offsetY = 0) {
     return (
-      this.x + this.width - this.offset.width > mo.x + mo.offset.x &&
-      this.y + this.height - this.offset.height > mo.y + mo.offset.y &&
-      this.x + this.offset.x < mo.x + mo.width - mo.offset.x &&
-      this.y + this.offset.y < mo.y + mo.height - mo.offset.y
+      this.x + this.width - this.offset.width > mo.x + mo.offset.x - offsetX &&
+      this.y + this.height - this.offset.height > mo.y + mo.offset.y - offsetY &&
+      this.x + this.offset.x < mo.x + mo.width - mo.offset.x + offsetX &&
+      this.y + this.offset.y < mo.y + mo.height - mo.offset.y + offsetY
     );
   }
+  
 
   isHurt() {
     let timepassed = new Date().getTime() - this.lastHit;
@@ -96,5 +99,15 @@ class MovebalObject extends DrawableObject {
     } else {
       this.lastHit = new Date().getTime();
     }
+  }
+
+  takeCoin(){
+    this.coin += 20;
+    this.coin_sound.play();
+  }
+
+  takeBottle(){
+    this.bottle += 20;
+    
   }
 }

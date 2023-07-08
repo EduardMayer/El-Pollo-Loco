@@ -10,7 +10,7 @@ class Chicken extends MovebalObject {
   width = 50;
 
   constructor() {
-    super().loadImage("img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
+    super().loadImage(this.IMAGES_WALK[0]);
     this.loadImages(this.IMAGES_WALK);
     this.animate();
     this.speed = 0.05 + Math.random() * 0.25;
