@@ -61,16 +61,19 @@ class Character extends MovebalObject {
     "img/2_character_pepe/5_dead/D-56.png",
     "img/2_character_pepe/5_dead/D-57.png",
   ];
+
   jumping_sound = new Audio("audio/jump.wav");
   walking_sound = new Audio("audio/sand-walk1.wav");
   hurt_sound = new Audio("audio/hurt1.wav");
   coin_sound = new Audio("audio/coin.wav");
+  bottle_sound = new Audio("audio/bottle2.wav");
   height = 250;
   width = 125;
-  speed = 1.5;
+  speed = 1.8;
   world;
   x = 130;
   y = 100;
+  seconds = 0;
 
   constructor() {
     super().loadImage(this.IMAGES_WALK[0]);
@@ -92,11 +95,9 @@ class Character extends MovebalObject {
       if (this.world.keyboard.LEFT && this.x > this.world.level.level_start_x) {
         this.characterMoveLeft();
       }
-
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
       }
-
       this.world.camera_x = -this.x + 50;
     }, 1000 / 100);
 
@@ -113,5 +114,22 @@ class Character extends MovebalObject {
         }
       }
     }, 100);
+  }
+
+  checkForIdle() {
+    let intervalId = setInterval(() => {
+      if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
+        this.seconds += 200;
+        if (this.seconds >= 7000) {
+          this.playAnimation(this.IMAGES_LONG_IDLE);
+        } else {
+          this.playAnimation(this.IMAGES_IDLE);
+        }
+      }
+    }, 2000);
+    document.addEventListener("keydown", () => {
+      clearInterval(intervalId);
+      this.seconds = 0;
+    });
   }
 }

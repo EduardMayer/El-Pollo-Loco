@@ -5,15 +5,17 @@ class Bottle extends MovebalObject {
       "img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png",
       "img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png",
     ];
-    x = 150 + Math.random() * 1100;
-    y = 145 + Math.random() * 130;
+    x;
+    y;
     height = 70;
     width = 70;
   
-    constructor() {
+    constructor(x, y) {
       super().loadImage("img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png");
       this.loadImages(this.IMAGES_WALK);
       this.animate();
+      this.x = x;
+      this.y = y; 
     }
   
     animate() {

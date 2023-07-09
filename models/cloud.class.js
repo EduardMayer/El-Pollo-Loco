@@ -2,11 +2,13 @@ class Cloud extends MovebalObject {
   height = 350;
   width = 350;
   y = 0;
-  x = 0 + Math.random() * 2700;
+  x;
+  speed = 0.05;
 
-  constructor(imagepath) {
+  constructor(imagepath, x) {
     super().loadImage(imagepath);
     this.animate();
+    this.x = x;
   }
 
   animate() {

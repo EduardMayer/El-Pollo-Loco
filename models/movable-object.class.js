@@ -108,6 +108,6 @@ class MovebalObject extends DrawableObject {
 
   takeBottle(){
     this.bottle += 20;
-    
+    this.bottle_sound.play();
   }
 }

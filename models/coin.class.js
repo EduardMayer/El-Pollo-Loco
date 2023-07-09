@@ -15,6 +15,7 @@ class Coin extends MovebalObject {
       this.animate();
       this.x = x;
       this.y = y;
+      
     }
   
     animate() {
