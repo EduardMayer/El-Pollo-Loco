@@ -17,6 +17,7 @@ class World {
     this.draw();
     this.setWorld();
     this.run();
+    this.CollisionDetection()
   }
 
   setWorld() {
@@ -25,11 +26,9 @@ class World {
 
   run() {
     setInterval(() => {
-      this.checkCollisionsWithEnemy();
-      this.checkThrowObjects();
-      this.checkCollisionsWithItems();
       this.character.checkForIdle();
-    }, 200);
+      this.checkThrowObjects();
+    }, 750);
   }
 
   checkThrowObjects() {
@@ -41,17 +40,56 @@ class World {
       this.throwableObject.push(bottle);
     }
   }
+  
+
+  CollisionDetection() {
+    setInterval(() => {
+      this.checkCollisionsWithEnemy();
+      this.checkCollisionsWithItems();
+    }, 100);
+  }
 
   checkCollisionsWithEnemy() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy, -25)) {
-        this.character.hit();
-        // console.log(this.character.health, enemy);
-        this.statusBarHp.setPercentage(this.character.health);
+        if (this.character.isColliding(enemy) && this.character.isAboveGround() && !enemy.isDead) {
+          this.killEnemy(enemy);
+        } else if (!enemy.isDead) {
+          this.character.hit();
+          this.statusBarHp.setPercentage(this.character.health);
+        }
       }
     });
   }
+  
+  killEnemy(enemy) {
+    enemy.isDead = true;
+    let time = new Date().getTime();
+    this.character.jump();
+  
+    let interval = setInterval(() => {
+      enemy.speed = 0;
+      let checkDate = new Date().getTime();
+      if (checkDate > time) {
+        clearInterval(interval);
+      }
+    }, 10);
+    
+    this.deleteEnemyAfterTimeout(enemy);
+  }
+  
 
+
+deleteEnemyAfterTimeout(enemy) {
+  setTimeout(() => {
+    const index = this.level.enemies.indexOf(enemy);
+    if (index !== -1) {
+      // Feind aus dem Array entfernen
+      this.level.enemies.splice(index, 1);
+    }
+  }, 2000);
+}
+  
   checkCollisionsWithItems() {
     this.level.coins.forEach((coin, index) => {
       if (this.character.isColliding(coin, -75, -130)) {
@@ -60,10 +98,9 @@ class World {
         this.statusBarCoin.setPercentage(this.character.coin);
       } else {
         this.level.bottles.forEach((bottle, index) => {
-          if (this.character.isColliding(bottle, -40, -80 )) {
+          if (this.character.isColliding(bottle, -40, -80)) {
             this.character.takeBottle();
-            console.log(this.character.bottle, bottle);
-            this.level.bottles.splice(index, 1); 
+            this.level.bottles.splice(index, 1);
             this.statusBarBottle.setPercentage(this.character.bottle);
           }
         });
@@ -88,7 +125,7 @@ class World {
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
     this.ctx.translate(-this.camera_x, 0);
-    
+
     //draw() wird immer wieder aufgerufen
     let self = this;
     requestAnimationFrame(function () {
@@ -112,7 +149,4 @@ class World {
       mo.restoreImage(this.ctx);
     }
   }
-
- 
-
 }

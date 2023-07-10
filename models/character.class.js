@@ -72,7 +72,7 @@ class Character extends MovebalObject {
   speed = 1.8;
   world;
   x = 130;
-  y = 100;
+  y = 185;
   seconds = 0;
 
   constructor() {

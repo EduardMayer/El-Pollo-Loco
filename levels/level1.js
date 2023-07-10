@@ -1,13 +1,11 @@
 const level1 = new Level(
-  
   [
-    //new Chicken(),
-    //new Chicken(),
-    //new Chicken(),
-    //new Big_Chicken(),
-    //new Big_Chicken(),
-    //new Big_Chicken(),
-    //new Big_Chicken(),
+    new Chicken(),
+    new Chicken(),
+    new Chicken(),
+    new Big_Chicken(),
+    new Big_Chicken(),
+    new Big_Chicken(),
   ],
   [
     new Cloud("img/5_background/layers/4_clouds/1.png", 100),
@@ -56,13 +54,10 @@ const level1 = new Level(
   [
     new Bottle(400, 150),
     new Bottle(500, 200),
-    new Bottle(850, 350),
-    new Bottle(950, 350),
+    new Bottle(850, 320),
+    new Bottle(950, 320),
     new Bottle(1100, 300),
     new Bottle(),
   ],
-  [
-    new Endboss()
-  ],
-  
+  [new Endboss()]
 );

@@ -5,6 +5,7 @@ class DrawableObject {
   height = 100;
   width = 100;
   
+  
   drawFrame(ctx) {
     if (
       this instanceof Character ||
@@ -15,12 +16,13 @@ class DrawableObject {
       this instanceof Bottle 
     ) {
       ctx.beginPath();
-      ctx.lineWidth = "4";
-      ctx.strokeStyle = "red";
+      ctx.lineWidth = "2";
+      ctx.strokeStyle = "black";
       ctx.rect(this.x, this.y, this.width, this.height);
       ctx.stroke();
     }
   }
+  
 
   draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
