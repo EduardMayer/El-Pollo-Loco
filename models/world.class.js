@@ -28,12 +28,12 @@ class World {
     setInterval(() => {
       this.character.checkForIdle();
       this.checkThrowObjects();
-    }, 750);
+    }, 550);
   }
 
   checkThrowObjects() {
     if (this.keyboard.D) {
-      let bottle = new ThrowableObject(
+    let bottle = new ThrowableObject(
         this.character.x + 55,
         this.character.y + 100
       );
@@ -51,7 +51,7 @@ class World {
 
   checkCollisionsWithEnemy() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy, -25)) {
+      if (this.character.isColliding(enemy)) {
         if (this.character.isColliding(enemy) && this.character.isAboveGround() && !enemy.isDead) {
           this.killEnemy(enemy);
         } else if (!enemy.isDead) {
@@ -66,7 +66,7 @@ class World {
     enemy.isDead = true;
     let time = new Date().getTime();
     this.character.jump();
-  
+
     let interval = setInterval(() => {
       enemy.speed = 0;
       let checkDate = new Date().getTime();
@@ -74,13 +74,12 @@ class World {
         clearInterval(interval);
       }
     }, 10);
-    
-    this.deleteEnemyAfterTimeout(enemy);
+    this.deleteEnemyAfterKill(enemy);
   }
   
 
 
-deleteEnemyAfterTimeout(enemy) {
+deleteEnemyAfterKill(enemy) {
   setTimeout(() => {
     const index = this.level.enemies.indexOf(enemy);
     if (index !== -1) {

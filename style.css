@@ -3,8 +3,43 @@ body {
   flex-direction: column;
   align-items: center;
   margin: 0;
+  background-image: url('/El-Pollo-Loco/img/mexico4.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'zabars', Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+
+
+
+h1{
+  font-size: 90px;
+  letter-spacing: 4px;
+  text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.5);
 }
 
 canvas {
   background-color: black;
+  display: block;
+}
+
+@font-face {
+  font-family: 'zabars';
+  src: url('/El-Pollo-Loco/font/ZABARS/zabars.ttf') format('truetype');
+}
+
+@media only screen and (max-width : 720px){
+  canvas {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-height : 480px){
+  canvas {
+    height: 100vh;
+  }
+  h1{
+    display: none;
+  }
 }
