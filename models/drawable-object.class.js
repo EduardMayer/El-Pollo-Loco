@@ -5,15 +5,11 @@ class DrawableObject {
   height = 100;
   width = 100;
   
-  
   drawFrame(ctx) {
     if (
-      this instanceof Character ||
       this instanceof Chicken ||
-      this instanceof Endboss ||
       this instanceof Big_Chicken ||
-      this instanceof Coin ||
-      this instanceof Bottle 
+      this instanceof Endboss
     ) {
       ctx.beginPath();
       ctx.lineWidth = "2";

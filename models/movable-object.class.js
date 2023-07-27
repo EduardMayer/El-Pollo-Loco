@@ -4,16 +4,13 @@ class MovebalObject extends DrawableObject {
   speedY = 0;
   acceleration = 2.5;
   offset = { x: 0, y: 0, width: 0, height: 0 };
-  health = 100;
+  seconds = 0;
   lastHit = 0;
   coin = 0;
   bottle = 0;
 
-  
-  
-
   applyGravity() {
-    const gravityInterval = setInterval(() => {
+    setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
@@ -21,27 +18,38 @@ class MovebalObject extends DrawableObject {
         this.speedY = 0;
         this.y = 185;
       }
-      if (this.isDead()) {
-        this.lose_game_sound.play();
-        clearInterval(gravityInterval);
-        this.fallDown();
-      }
     }, 1000 / 30);
+  }
+
+  loseTheGame() {
+    this.fallDown();
+    bg_music.pause();
+    document.getElementById("loseGameContainer").classList.remove("d-none");
+    document
+      .getElementById("loseGameContainer")
+      .classList.add("loseGameContainer");
+    this.lose_game_sound.play();
+  }
+
+  winTheGame() {
+    this.fallDown();
+    bg_music.pause();
+    document.getElementById("winGameContainer").classList.remove("d-none");
+    document
+      .getElementById("winGameContainer")
+      .classList.add("winGameContainer");
+    this.win_game_sound.play();
   }
 
   fallDown() {
     setInterval(() => {
-      this.speed = 1;
-      this.y += 15;
       this.speed = 0;
+      this.y += 15;
     }, 100);
   }
 
-
-
   isAboveGround() {
     if (this instanceof ThrowableObject) {
-      // Throwable Object allways fall down
       return true;
     } else {
       return this.y < 185;
@@ -80,9 +88,15 @@ class MovebalObject extends DrawableObject {
   }
 
   objectMoveLeft() {
-    setInterval(() => {
-      this.x -= this.speed; // Ändere die Geschwindigkeit nach Bedarf
-    }, 1000 / 100); // Ändere das Intervall nach Bedarf
+    this.leftIntervalId = setInterval(() => {
+      this.x -= this.speed;
+    }, 1000 / 100);
+  }
+
+  objectMoveRight() {
+    this.rightIntervalId = setInterval(() => {
+      this.x += this.speed;
+    }, 1000 / 100);
   }
 
   jump() {
@@ -111,12 +125,13 @@ class MovebalObject extends DrawableObject {
 
   hit() {
     if (this.isHurt()) {
-      return; // Der Gegner ist bereits verletzt, daher wird kein weiterer Schaden verursacht
+      return; //Der Gegner ist bereits verletzt, daher wird kein weiterer Schaden verursacht
     }
     this.lastHit = new Date().getTime();
-    this.health -= 20;
+    this.health -= 0;
     if (this.health < 0) {
       this.health = 0;
+      this.hurt_sound.pause();
     }
     this.hurt_sound.play();
   }
@@ -127,8 +142,21 @@ class MovebalObject extends DrawableObject {
   }
 
   takeBottle() {
-    this.bottle += 20;
     this.bottle_sound.play();
+    this.bottle += 20;
   }
-  
+
+  stopBottle() {
+    this.speed = 0;
+    this.speedY = 0;
+    this.acceleration = 0;
+    clearInterval(this.throwInterval);
+
+    setTimeout(() => {
+      world.bottle = "";
+      world.throwableObject = world.throwableObject.filter(
+        (bottle) => bottle !== this
+      );
+    }, 250);
+  }
 }

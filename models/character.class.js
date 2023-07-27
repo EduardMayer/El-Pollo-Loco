@@ -32,17 +32,17 @@ class Character extends MovebalObject {
     "./img/2_character_pepe/2_walk/W-26.png",
   ];
   IMAGES_JUMP = [
-    "./img/2_character_pepe/3_jump/j-31.png",
-    "./img/2_character_pepe/3_jump/j-32.png",
-    "./img/2_character_pepe/3_jump/j-33.png",
-    "./img/2_character_pepe/3_jump/j-34.png",
-    "./img/2_character_pepe/3_jump/j-35.png",
-    "./img/2_character_pepe/3_jump/j-36.png",
-    "./img/2_character_pepe/3_jump/j-37.png",
-    "./img/2_character_pepe/3_jump/j-38.png",
-    "./img/2_character_pepe/3_jump/j-39.png",
+    "/El-Pollo-Loco/img/2_character_pepe/3_jump/J-31.png",
+    "/El-Pollo-Loco/img/2_character_pepe/3_jump/J-32.png",
+    "/El-Pollo-Loco/img/2_character_pepe/3_jump/J-33.png",
+    "/El-Pollo-Loco/img/2_character_pepe/3_jump/J-34.png",
+    "/El-Pollo-Loco/img/2_character_pepe/3_jump/J-35.png",
+    "/El-Pollo-Loco/img/2_character_pepe/3_jump/J-36.png",
+    "/El-Pollo-Loco/img/2_character_pepe/3_jump/J-37.png",
+    "/El-Pollo-Loco/img/2_character_pepe/3_jump/J-38.png",
+    "/El-Pollo-Loco/img/2_character_pepe/3_jump/J-39.png",
   ];
-  
+
   IMAGES_HURT = [
     "./img/2_character_pepe/4_hurt/H-41.png",
     "./img/2_character_pepe/4_hurt/H-42.png",
@@ -57,24 +57,28 @@ class Character extends MovebalObject {
     "./img/2_character_pepe/5_dead/D-56.png",
     "./img/2_character_pepe/5_dead/D-57.png",
   ];
-  lose_game_sound = new Audio ('audio/loseguitar3.wav');
+  lose_game_sound = new Audio("audio/loseguitar3.wav");
   jumping_sound = new Audio("audio/jump.wav");
   walking_sound = new Audio("audio/sand-walk1.wav");
   hurt_sound = new Audio("audio/hurt1.wav");
   coin_sound = new Audio("audio/coin.wav");
   bottle_sound = new Audio("audio/bottle2.wav");
+  snore_sound = new Audio("audio/snore2.wav");
+
   height = 250;
   width = 125;
   speed = 1.8;
   world;
   x = 130;
   y = 185;
-  seconds = 0;
+  health = 100;
+  bottle = 0;
+  idle = false;
 
   constructor() {
     super().loadImage(this.IMAGES_IDLE[0]);
     this.loadImages(this.IMAGES_WALK);
-    this.loadImages(this.IMAGES_JUMP); 
+    this.loadImages(this.IMAGES_JUMP);
     this.loadImages(this.IMAGES_IDLE);
     this.loadImages(this.IMAGES_LONG_IDLE);
     this.loadImages(this.IMAGES_HURT);
@@ -100,7 +104,9 @@ class Character extends MovebalObject {
     setInterval(() => {
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
+        this.loseTheGame();
       } else if (this.isHurt()) {
+        this.seconds = 0;
         this.playAnimation(this.IMAGES_HURT);
       } else if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMP);
@@ -113,18 +119,27 @@ class Character extends MovebalObject {
   }
 
   checkForIdle() {
-    let intervalId = setInterval(() => {
-      if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
+    let intervalIdle = setInterval(() => {
+      if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
         this.seconds += 200;
         if (this.seconds >= 7000) {
           this.playAnimation(this.IMAGES_LONG_IDLE);
+          // this.snore_sound.play();
         } else {
           this.playAnimation(this.IMAGES_IDLE);
         }
       }
-    }, 2000);
+    }, 1750);
+    this.abortIdle(intervalIdle);
+  }
+
+  abortIdle(intervalIdle) {
     document.addEventListener("keydown", () => {
-      clearInterval(intervalId);
+      clearInterval(intervalIdle);
+      this.seconds = 0;
+    });
+    document.addEventListener("touchstart", () => {
+      clearInterval(intervalIdle);
       this.seconds = 0;
     });
   }

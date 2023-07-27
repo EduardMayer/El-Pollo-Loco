@@ -15,7 +15,7 @@ class Chicken extends MovebalObject {
   width = 60;
   speed = 0.05 + Math.random() * 0.25;
   isDead = false;
-  offset = { x: 40, y: -10, width: 0, height: 0 };
+  offset = { x: 30, y: -15, width: 0, height: 0 };
 
   constructor() {
     super().loadImage(this.IMAGES_WALK[0]);
@@ -27,7 +27,7 @@ class Chicken extends MovebalObject {
 
   animate() {
     setInterval(() => {
-      if ( this.isDead === false) {
+      if (this.isDead === false) {
         this.playAnimation(this.IMAGES_WALK);
       } else {
         this.playAnimation(this.IMAGES_DEAD);
@@ -35,4 +35,6 @@ class Chicken extends MovebalObject {
     }, 300);
     this.objectMoveLeft();
   }
+
+
 }

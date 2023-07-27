@@ -13,7 +13,7 @@ class Big_Chicken extends MovebalObject {
     height = 75;
     width = 75;
     isDead = false;
-    offset = { x: 35, y: -5, width: 0, height: 0 };
+    offset = { x: 25, y: -5, width: 0, height: 0 };
   
     constructor() {
       super().loadImage(this.IMAGES_WALK[0]);
