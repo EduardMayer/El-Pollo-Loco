@@ -50,9 +50,8 @@ class Endboss extends MovebalObject {
   hurtBoss = false;
   bossHitYou = false;
   healthBoss = 100;
-  lastHitBoss = 0;
   bossAttackCooldown = false;
-  speed = 10.0;
+  speed = 11.0;
   otherDirection = false;
   hitBossChicken = new Audio("audio/boss.wav");
   win_game_sound = new Audio("audio/winning.wav");
@@ -99,7 +98,7 @@ class Endboss extends MovebalObject {
   }
 
   hitSettings() {
-    // this.hitBossChicken.play();
+    this.hitBossChicken.play();
     this.speed = 0;
     this.isWalking = false;
     this.hurtBoss = true;
@@ -109,7 +108,7 @@ class Endboss extends MovebalObject {
 
   afterHitSettings() {
     this.hurtBoss = false;
-    this.speed += 10.0;
+    this.speed += 11.0;
     this.bossAttackCooldown = false;
     this.isWalking = true;
   }

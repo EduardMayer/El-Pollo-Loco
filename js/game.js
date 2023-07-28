@@ -4,17 +4,18 @@ let keyboard = new Keyboard();
 let isMusicPlaying = true;
 let fullscreen = false;
 let bg_music = new Audio("/El-Pollo-Loco/audio/background_mexico.mp3");
-bg_music.volume = 0.0; // Musiklautsärke 0 gerade
+bg_music.volume = 0.1; // Musiklautsärke 0 gerade
 
 function init() {
   document.getElementById("startScreen").classList.add("d-none");
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
   bindBtsPressEvents();
+  
   if (isMusicPlaying) {
     bg_music.play();
   }
-
+ 
 }
 
 function restartGame() {
@@ -22,13 +23,7 @@ function restartGame() {
   document.getElementById('winGameContainer').classList.remove("winGameContainer");
   document.getElementById('winGameContainer').classList.add("d-none");
   document.getElementById('loseGameContainer').classList.add("d-none");
-  
-  canvas = null;
-  world = null;
-  bg_music.currentTime = 0;
   document.location.reload();
-  init();
-  levelInit();
 }
 
 function volumeONOFF() {
@@ -37,9 +32,11 @@ function volumeONOFF() {
   if (!isMusicPlaying) {
     image.src = "/El-Pollo-Loco/icons/volume-up.png";
     isMusicPlaying = true;
+    
   } else {
     image.src = "/El-Pollo-Loco/icons/volume-mute.png";
     isMusicPlaying = false;
+    
   }
 }
 
@@ -50,10 +47,12 @@ function ingameVolumeONOFF() {
     image.src = "/El-Pollo-Loco/icons/volume-up.png";
     isMusicPlaying = true;
     bg_music.play();
+    
   } else {
     image.src = "/El-Pollo-Loco/icons/volume-mute.png";
     isMusicPlaying = false;
     bg_music.pause();
+    
   }
 }
 

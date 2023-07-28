@@ -124,7 +124,7 @@ class Character extends MovebalObject {
         this.seconds += 200;
         if (this.seconds >= 7000) {
           this.playAnimation(this.IMAGES_LONG_IDLE);
-          // this.snore_sound.play();
+          //this.snore_sound.play();
         } else {
           this.playAnimation(this.IMAGES_IDLE);
         }

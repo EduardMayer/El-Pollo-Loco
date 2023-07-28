@@ -30,27 +30,36 @@
 </head>
 
 <body>
-    <h1>El Pollo Loco</h1>
+    <div class="titleContainer">
+        <h1>El Pollo Loco</h1>
+        <div class="rotateScreen"></div>
+    </div>
+
     <div class="mainContainer" id="mainContainer">
         <canvas id="canvas" width="720" height="480"></canvas>
         <div class="buttonIngameContainer">
-            <div class="iconContainer" id="joystick" onclick="openButtonLayer()"><img src="/El-Pollo-Loco/icons/joystick-2-32.png" alt="joystick">
+            <div class="iconContainerMobil" id="joystick" onclick="openButtonLayer()"><img
+                    src="/El-Pollo-Loco/icons/joystick-2-32.png" alt="joystick">
             </div>
-            <div class="iconContainer" onclick="ingameVolumeONOFF();"><img id="ingameVolume"
+            <div class="iconContainerMobil" onclick="ingameVolumeONOFF();"><img id="ingameVolume"
                     src="/El-Pollo-Loco/icons/volume-up.png"></div>
-            <div class="iconContainer" id="fullScreen" onclick="openFullscreen();"><img
+            <div class="iconContainerMobil" id="fullScreen" onclick="openFullscreen();"><img
                     src="/El-Pollo-Loco/icons/full-screen.png" alt="full-screen"> </div>
         </div>
         <div class="controlPanel">
             <div class="leftSitePanel">
-                <div class="iconContainer" id="moveLeftBtn"><img class="leftButton" src="/El-Pollo-Loco/icons/arrow.png"></div>
-                <div class="iconContainer" id="moveRightBtn"><img class="rightButton" src="/El-Pollo-Loco/icons/arrow.png"></div>
+                <div class="iconContainerMobil" id="moveLeftBtn"><img class="leftButton"
+                        src="/El-Pollo-Loco/icons/arrow.png"></div>
+                <div class="iconContainerMobil" id="moveRightBtn"><img class="rightButton"
+                        src="/El-Pollo-Loco/icons/arrow.png"></div>
             </div>
             <div class="rightSitePanel">
-                <div class="iconContainer" id="jumpBtn"><img class="spaceButton" src="/El-Pollo-Loco/icons/space.png"></div>
-                <div class="iconContainer" id="throwBtn"><div class="throwButton">D</div>
+                <div class="iconContainerMobil" id="jumpBtn"><img class="spaceButton"
+                        src="/El-Pollo-Loco/icons/space.png"></div>
+                <div class="iconContainerMobil" id="throwBtn">
+                    <div class="throwButton">D</div>
+                </div>
             </div>
-        </div>
         </div>
         <div class="startScreen" id="startScreen">
             <div class="backgroundImg" id="backgroundImg"><img
@@ -69,19 +78,19 @@
                         src="/El-Pollo-Loco/icons/play.png" alt="info"></div>
             </div>
         </div>
-        
+
         <div class="d-none" id="loseGameContainer">
             <div class="losePicture" id="losePicture"><img
                     src="/El-Pollo-Loco/img/9_intro_outro_screens/game_over/you lost.png" alt="lose"></div>
             <div class="restartContainer" onclick="restartGame()"><img src="/El-Pollo-Loco/icons/restart.png"></div>
         </div>
-        
+
         <div class="d-none" id="winGameContainer">
-            <div class="winPicture" id="winPicture"><img 
-                src="/El-Pollo-Loco/img/9_intro_outro_screens/game_over/game over.png" alt="win"></div>
+            <div class="winPicture" id="winPicture"><img
+                    src="/El-Pollo-Loco/img/9_intro_outro_screens/game_over/game over.png" alt="win"></div>
             <div class="restartContainer" onclick="restartGame()"><img src="/El-Pollo-Loco/icons/restart.png"></div>
         </div>
-        
+
         <div class="d-none" id="infoContainer">
             <div class="closeIcon">
                 <h2>El Pollo Loco</h2><img onclick="closeInfoContainer()" src="/El-Pollo-Loco/icons/close.png">

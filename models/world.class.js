@@ -36,6 +36,8 @@ class World {
       this.checkThrowObjects();
       this.checkCharacterPosition();
     }, 100);
+
+    
   }
 
   collisionDetection() {
@@ -47,25 +49,21 @@ class World {
     }, 100);
   }
 
- 
-    startBossFight() {
-     
-}
 
+  
   checkCharacterPosition() {
-    if (this.character.x > this.endboss.x) {
-      this.endboss.bossMoveRight();
-    } else if (this.character.x < this.endboss.x) {
-      this.endboss.bossMoveLeft();
-    }
+    if (this.endboss.isWalking) {
+      if (this.character.x > this.endboss.x) {
+        this.endboss.bossMoveRight();
+      } else if (this.character.x < this.endboss.x) {
+        this.endboss.bossMoveLeft();
+      }
+    } 
+
   }
 
   checkThrowObjects() {
-    if (
-      this.keyboard.D &&
-      this.character.bottle > 0 &&
-      !this.character.isThrowing
-    ) {
+    if (this.keyboard.D && this.character.bottle > 0 &&!this.character.isThrowing) {
       this.bottle = new ThrowableObject(
         this.character.x + 35,
         this.character.y + 85,
@@ -74,10 +72,10 @@ class World {
       this.throwableObject.push(this.bottle);
       this.character.bottle += 20;
       this.statusBarBottle.setPercentage(this.character.bottle);
-      this.character.isThrowing = true; // Mark the character as throwing
+      this.character.isThrowing = true; 
       setTimeout(() => {
-        this.character.isThrowing = false; // Reset the throwing status after a delay
-      }, 200); // Adjust the delay as needed
+        this.character.isThrowing = false;
+      }, 200);
     }
   }
 
