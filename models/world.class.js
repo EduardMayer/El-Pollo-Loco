@@ -70,12 +70,12 @@ class World {
         this.character.otherDirection
       );
       this.throwableObject.push(this.bottle);
-      this.character.bottle += 20;
+      this.character.bottle -= 20;
       this.statusBarBottle.setPercentage(this.character.bottle);
       this.character.isThrowing = true; 
       setTimeout(() => {
         this.character.isThrowing = false;
-      }, 200);
+      }, 300);
     }
   }
 
@@ -123,6 +123,7 @@ class World {
       if (this.character.isColliding(enemy)) {
         if (this.character.isAboveGround() && !enemy.isDead) {
           this.killEnemy(enemy);
+          this.character.chicken_sound.play();
           this.character.jump();
         } else if (!enemy.isDead) {
           this.character.hit();
@@ -132,7 +133,8 @@ class World {
       this.throwableObject.forEach((object) => {
         if (object.isColliding(enemy) && !enemy.isDead) {
           this.killEnemy(enemy);
-          object.setCollidedWithEnemy(true); // Flasche hat mit Enemy kollidiert
+          this.character.chicken_sound.play();
+          object.setCollidedWithEnemy(true);
         }
       });
     });
@@ -141,7 +143,6 @@ class World {
   killEnemy(enemy) {
     enemy.isDead = true;
     let time = new Date().getTime();
-
     let interval = setInterval(() => {
       enemy.speed = 0;
       let checkDate = new Date().getTime();

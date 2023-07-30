@@ -108,7 +108,7 @@ class Endboss extends MovebalObject {
 
   afterHitSettings() {
     this.hurtBoss = false;
-    this.speed += 11.0;
+    this.speed += 15.0;
     this.bossAttackCooldown = false;
     this.isWalking = true;
   }

@@ -9,7 +9,7 @@ class Chicken extends MovebalObject {
     "./img/3_enemies_chicken/chicken_small/2_dead/dead.png"
   ];
 
-  x = 300 + Math.random() * 1200;
+  x = 450 + Math.random() * 2200;
   y = 370;
   height = 60;
   width = 60;

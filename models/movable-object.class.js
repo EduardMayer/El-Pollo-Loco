@@ -10,7 +10,7 @@ class MovebalObject extends DrawableObject {
   bottle = 0;
 
   applyGravity() {
-    setInterval(() => {
+    this.gravityInterval = setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
@@ -22,29 +22,26 @@ class MovebalObject extends DrawableObject {
   }
 
   loseTheGame() {
+    clearInterval(this.gravityInterval);
     this.fallDown();
     bg_music.pause();
     document.getElementById("loseGameContainer").classList.remove("d-none");
-    document
-      .getElementById("loseGameContainer")
-      .classList.add("loseGameContainer");
-    this.lose_game_sound.play();
+    document.getElementById("loseGameContainer").classList.add("loseGameContainer");
+    
   }
 
   winTheGame() {
     this.fallDown();
     bg_music.pause();
     document.getElementById("winGameContainer").classList.remove("d-none");
-    document
-      .getElementById("winGameContainer")
-      .classList.add("winGameContainer");
+    document.getElementById("winGameContainer").classList.add("winGameContainer");
     this.win_game_sound.play();
   }
 
   fallDown() {
     setInterval(() => {
       this.speed = 0;
-      this.y += 15;
+      this.y += 10;
     }, 100);
   }
 
@@ -107,17 +104,13 @@ class MovebalObject extends DrawableObject {
   isColliding(mo, offsetX = 0, offsetY = 0) {
     return (
       this.x + this.width - this.offset.width > mo.x + mo.offset.x - offsetX &&
-      this.y + this.height - this.offset.height >
-        mo.y + mo.offset.y - offsetY &&
+      this.y + this.height - this.offset.height >mo.y + mo.offset.y - offsetY &&
       this.x + this.offset.x < mo.x + mo.width - mo.offset.x + offsetX &&
       this.y + this.offset.y < mo.y + mo.height - mo.offset.y + offsetY
     );
   }
 
-  isDead() {
-    return this.health == 0;
-  }
-
+  
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit;
     return timePassed < 1000;
@@ -125,13 +118,14 @@ class MovebalObject extends DrawableObject {
 
   hit() {
     if (this.isHurt()) {
-      return; //Der Gegner ist bereits verletzt, daher wird kein weiterer Schaden verursacht
+      return;
     }
     this.lastHit = new Date().getTime();
-    this.health -= 0;
-    if (this.health < 0) {
-      this.health = 0;
+    this.health -= 20;
+    if (this.health == 0) {
       this.hurt_sound.pause();
+      this.isDead = true;
+      this.lose_game_sound.play();
     }
     this.hurt_sound.play();
   }

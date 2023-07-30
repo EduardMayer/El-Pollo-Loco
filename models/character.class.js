@@ -64,6 +64,7 @@ class Character extends MovebalObject {
   coin_sound = new Audio("audio/coin.wav");
   bottle_sound = new Audio("audio/bottle2.wav");
   snore_sound = new Audio("audio/snore2.wav");
+  chicken_sound = new Audio("audio/chicken.wav")
 
   height = 250;
   width = 125;
@@ -74,6 +75,7 @@ class Character extends MovebalObject {
   health = 100;
   bottle = 0;
   idle = false;
+  isDead = false;
 
   constructor() {
     super().loadImage(this.IMAGES_IDLE[0]);
@@ -102,7 +104,7 @@ class Character extends MovebalObject {
     }, 1000 / 100);
 
     setInterval(() => {
-      if (this.isDead()) {
+      if (this.isDead) {
         this.playAnimation(this.IMAGES_DEAD);
         this.loseTheGame();
       } else if (this.isHurt()) {

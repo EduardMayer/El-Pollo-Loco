@@ -14,11 +14,11 @@ class ThrowableObject extends MovebalObject {
     "./img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png",
     "./img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
   ];
-
+  shatter_sound = new Audio("audio/glass-shatter.wav")
   throw_sound = new Audio("audio/throw.wav");
   throwing = false;
   collidedWithEnemy = false;
-  
+  hasShattered = false;
  
   
   constructor(x, y, otherDirection) {
@@ -57,17 +57,34 @@ class ThrowableObject extends MovebalObject {
     setInterval(() => {
       if (this.throwing && !this.collidedWithEnemy) {
         if (this.y >= 370) {
-          this.stopBottle();
-          this.playAnimation(this.IMAGES_SPLASH);   
+          this.animateSplash();
         } else {
           this.playAnimation(this.IMAGES_ROTATION);
         }
       } else if (this.collidedWithEnemy) {
-        this.stopBottle();
-        this.playAnimation(this.IMAGES_SPLASH);
+        this.animateCollision();
       }
     }, 85);
   }
+
+  animateSplash() {
+    this.stopBottle();
+    this.playAnimation(this.IMAGES_SPLASH);
+    if (!this.hasShattered) {
+      this.shatter_sound.play();
+      this.hasShattered = true;
+    }
+  }
+
+  animateCollision() {
+    this.stopBottle();
+    this.playAnimation(this.IMAGES_SPLASH);
+    if (!this.hasShattered) {
+      this.shatter_sound.play();
+      this.hasShattered = true;
+    }
+  }
+
 
   setCollidedWithEnemy(value) {
     this.collidedWithEnemy = value;
