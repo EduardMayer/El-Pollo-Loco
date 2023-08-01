@@ -1,4 +1,13 @@
+/**
+ * Represents a character that extends a movable object in a game.
+ * @class Character
+ * @extends MovebalObject
+ */
 class Character extends MovebalObject {
+   /**
+   * Arrays of image paths for the character's animation.
+   * @type {string[]}
+   */
   IMAGES_IDLE = [
     "./img/2_character_pepe/1_idle/idle/I-1.png",
     "./img/2_character_pepe/1_idle/idle/I-2.png",
@@ -57,6 +66,11 @@ class Character extends MovebalObject {
     "./img/2_character_pepe/5_dead/D-56.png",
     "./img/2_character_pepe/5_dead/D-57.png",
   ];
+
+  /**
+   * Ingame soundeffects.
+   * @type {audio}
+   */
   lose_game_sound = new Audio("audio/loseguitar3.wav");
   jumping_sound = new Audio("audio/jump.wav");
   walking_sound = new Audio("audio/sand-walk1.wav");
@@ -66,17 +80,70 @@ class Character extends MovebalObject {
   snore_sound = new Audio("audio/snore2.wav");
   chicken_sound = new Audio("audio/chicken.wav")
 
+  /**
+   * The height of the character.
+   * @type {number}
+   */
   height = 250;
+
+  /**
+   * The width of the character.
+   * @type {number}
+   */
   width = 125;
+
+  /**
+   * The speed of the character.
+   * @type {number}
+   */
   speed = 1.8;
+
+  /**
+   * Reference to the world object in the game.
+   * @type {World}
+   */
   world;
+
+  /**
+   * The x-coordinate of the character's position.
+   * @type {number}
+   */
   x = 130;
+
+  /**
+   * The y-coordinate of the character's position.
+   * @type {number}
+   */
   y = 185;
+
+  /**
+   * The health points of the character.
+   * @type {number}
+   */
   health = 100;
+
+  /**
+   * The number of bottles collected by the character.
+   * @type {number}
+   */
   bottle = 0;
-  idle = false;
+
+  /**
+   * Flag indicating if the character is currently idling.
+   * @type {boolean}
+   */
+  idleInterval = false;
+
+  /**
+   * Flag indicating if the character is dead.
+   * @type {boolean}
+   */
   isDead = false;
 
+  /**
+     * Create a new Character instance.
+     * @constructor
+     */
   constructor() {
     super().loadImage(this.IMAGES_IDLE[0]);
     this.loadImages(this.IMAGES_WALK);
@@ -87,10 +154,15 @@ class Character extends MovebalObject {
     this.loadImages(this.IMAGES_DEAD);
     this.applyGravity();
     this.animate();
+
   }
 
+  /**
+ * Animate the character's movements and actions.
+ * @memberof Character
+ */
   animate() {
-    setInterval(() => {
+    this.characterIntervals.push(setInterval(() => {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.characterMoveRight();
       }
@@ -101,12 +173,11 @@ class Character extends MovebalObject {
         this.jump();
       }
       this.world.camera_x = -this.x + 50;
-    }, 1000 / 100);
+    }, 1000 / 100));
 
-    setInterval(() => {
+    this.characterIntervals.push(setInterval(() => {
       if (this.isDead) {
         this.playAnimation(this.IMAGES_DEAD);
-        this.loseTheGame();
       } else if (this.isHurt()) {
         this.seconds = 0;
         this.playAnimation(this.IMAGES_HURT);
@@ -117,32 +188,8 @@ class Character extends MovebalObject {
           this.playAnimation(this.IMAGES_WALK);
         }
       }
-    }, 100);
+    }, 100));
   }
 
-  checkForIdle() {
-    let intervalIdle = setInterval(() => {
-      if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
-        this.seconds += 200;
-        if (this.seconds >= 7000) {
-          this.playAnimation(this.IMAGES_LONG_IDLE);
-          //this.snore_sound.play();
-        } else {
-          this.playAnimation(this.IMAGES_IDLE);
-        }
-      }
-    }, 1750);
-    this.abortIdle(intervalIdle);
-  }
 
-  abortIdle(intervalIdle) {
-    document.addEventListener("keydown", () => {
-      clearInterval(intervalIdle);
-      this.seconds = 0;
-    });
-    document.addEventListener("touchstart", () => {
-      clearInterval(intervalIdle);
-      this.seconds = 0;
-    });
-  }
 }

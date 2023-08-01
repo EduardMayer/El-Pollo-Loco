@@ -12,6 +12,59 @@ body {
   overflow: hidden;
 }
 
+.rotateScreen {
+  display: none;
+}
+
+.rotateScreen h2 {
+  text-align: center;
+  font-size: 70px;
+  margin: 30px;
+  letter-spacing: 4px;
+  text-shadow: 4px 4px 2px rgb(255, 255, 255);
+}
+
+.mobileRotate {
+  width: 150px;
+  height: 150px;
+  rotate: 135deg;
+  -webkit-animation: spin 4s linear infinite;
+  -moz-animation: spin 4s linear infinite;
+  animation: spin 4s linear infinite;
+}
+
+@-moz-keyframes spin {
+  0%,
+  100% {
+    -moz-transform: rotate(-0deg);
+  }
+  50% {
+    -moz-transform: rotate(-90deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  0%,
+  100% {
+    -webkit-transform: rotate(-0deg);
+  }
+  50% {
+    -webkit-transform: rotate(-90deg);
+  }
+}
+
+@keyframes spin {
+  0%,
+  100% {
+    -webkit-transform: rotate(-0deg);
+    transform: rotate(-0deg);
+  }
+  50% {
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+  }
+}
+
 .d-none {
   display: none !important;
 }
@@ -358,6 +411,22 @@ h1 {
   }
 }
 
+@media only screen and (max-width: 630px) {
+  .rotateScreen {
+    display: flex;
+    background-color: white;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 9999;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("/El-Pollo-Loco/img/mexico4.png");
+    background-size: cover;
+  }
+}
+
 @media only screen and (max-height: 700px) {
   body {
     justify-content: flex-start;
@@ -370,6 +439,17 @@ h1 {
   }
   body {
     justify-content: center;
+  }
+}
+
+@media only screen and (max-height: 500px) {
+  .rotateScreen h2 {
+    font-size: 50px;
+  }
+
+  .mobileRotate {
+    height: 100px;
+    width: 100px;
   }
 }
 

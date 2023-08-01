@@ -1,5 +1,11 @@
+/**
+ * Initializes the game level with various game elements.
+ */
 let level1;
-
+/**
+   * Represents the first level of the game.
+   * @type {Level}
+   */
 function levelInit() {
   level1 = new Level(
     [

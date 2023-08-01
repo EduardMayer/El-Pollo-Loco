@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html translate="no">
 
 <head>
     <meta charset="UTF-8">
@@ -26,15 +26,21 @@
     <script src="models/throwable-object.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
-
+    <link rel="icon" type="image/jpg" href="img/4800_8_06.jpg">
 </head>
 
 <body>
     <div class="titleContainer">
         <h1>El Pollo Loco</h1>
-        <div class="rotateScreen"></div>
     </div>
-
+    <div class="rotateScreen">
+        <div>
+            <h2>Please rotate your device!</h2>
+        </div>
+        <div>
+            <img class="mobileRotate" src="/El-Pollo-Loco/img/rotation_7823679.png" alt="rotate-device">
+        </div>
+    </div>
     <div class="mainContainer" id="mainContainer">
         <canvas id="canvas" width="720" height="480"></canvas>
         <div class="buttonIngameContainer">
@@ -54,11 +60,11 @@
                         src="/El-Pollo-Loco/icons/arrow.png"></div>
             </div>
             <div class="rightSitePanel">
-                <div class="iconContainerMobil" id="jumpBtn"><img class="spaceButton"
-                        src="/El-Pollo-Loco/icons/space.png"></div>
                 <div class="iconContainerMobil" id="throwBtn">
                     <div class="throwButton">D</div>
                 </div>
+                <div class="iconContainerMobil" id="jumpBtn"><img class="spaceButton"
+                        src="/El-Pollo-Loco/icons/space.png"></div>
             </div>
         </div>
         <div class="startScreen" id="startScreen">
@@ -97,9 +103,11 @@
             </div>
             <div>
                 <p>El Pollo Loco is a simple jump-and-run game. Take on the role of Pepe, the brave hero
-                    who fights against a chicken invasion. Utilize your jumping abilities to defeat chickens and face
+                    who fights against a chicken invasion. Utilize your jumping abilities to defeat chickens and
+                    face
                     the
-                    epic end boss battle. Showcase your skills and save the world! An exciting adventure awaits you!</p>
+                    epic end boss battle. Showcase your skills and save the world! An exciting adventure awaits you!
+                </p>
             </div>
         </div>
         <div class="d-none" id="controlInfoContainer">
