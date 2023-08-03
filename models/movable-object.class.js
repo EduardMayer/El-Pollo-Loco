@@ -275,14 +275,21 @@ class MovebalObject extends DrawableObject {
     this.coin_sound.play();
   }
 
-  /**
+/**
  * Increase the bottle count of the movable object.
  * @memberof MovebalObject
  */
-  takeBottle() {
-    this.bottle_sound.play();
+takeBottle() {
+  this.bottle_sound.play();
+  // Check if the current bottle count is less than 100 before incrementing it.
+  if (this.bottle < 100) {
     this.bottle += 20;
+    // If the bottle count exceeds 100 after incrementing, set it to 100.
+    if (this.bottle > 100) {
+      this.bottle = 100;
+    }
   }
+}
 
   /**
   * Stop the movement of the movable object after throwing a bottle.

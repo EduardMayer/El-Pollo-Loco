@@ -103,7 +103,6 @@ class ThrowableObject extends MovebalObject {
    * Animates the throwable object based on its current state (rotation, splash, or collision with enemy).
    */
   animate() {
-    this.characterIntervals.push(
       setInterval(() => {
         if (this.throwing && !this.collidedWithEnemy) {
           if (this.y >= 370) {
@@ -114,8 +113,7 @@ class ThrowableObject extends MovebalObject {
         } else if (this.collidedWithEnemy) {
           this.animateCollision();
         }
-      }, 85)
-    );
+      }, 85);
   }
 
   /**
